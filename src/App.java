@@ -10,6 +10,7 @@ public class App {
         mainFrame.getContentPane().setBackground(new Color(50, 159, 168));
         mainFrame.setVisible(true);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setResizable(false);
 
         JLabel topBar = new JLabel();
         topBar.setBounds(0, 0, 800, 20);
@@ -20,9 +21,14 @@ public class App {
         textArea.setBounds(25, 30, 750, 525);
         textArea.setFont(new Font("sans-serif", Font.PLAIN, 13));
         textArea.setBackground(new Color(40, 149, 168));
-        textArea.setForeground(Color.WHITE);
+        textArea.setForeground(Color.BLACK);
         textArea.setBorder(BorderFactory.createSoftBevelBorder(1, Color.GRAY, Color.gray));
         textArea.setOpaque(true);
+
+        JTextArea rowIndicator = new JTextArea("1");
+        rowIndicator.setBounds(5, 30, 25, 600);
+        rowIndicator.setFont(new Font("sans-serif", Font.PLAIN, 16));
+        rowIndicator.setOpaque(false);
 
         JLabel cornerLabel1 = new JLabel();
         cornerLabel1.setBounds(700, 20, 100, 75);
@@ -36,8 +42,16 @@ public class App {
 
         mainFrame.add(topBar);
         mainFrame.add(textArea);
+        mainFrame.add(rowIndicator);
         mainFrame.add(cornerLabel1);
         mainFrame.add(cornerLabel2);
         mainFrame.repaint();
+
+        while (true) { 
+            rowIndicator.setText("");
+            for (int i = 1; i < textArea.getLineCount() + 1; i++) {
+                rowIndicator.setText(rowIndicator.getText() + Integer.toString(i) + "\n");
+            }
+        }
     }
 }
