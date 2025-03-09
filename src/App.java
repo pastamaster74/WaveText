@@ -26,9 +26,10 @@ public class App {
         textArea.setOpaque(true);
 
         JTextArea rowIndicator = new JTextArea("1");
-        rowIndicator.setBounds(5, 30, 25, 600);
-        rowIndicator.setFont(new Font("sans-serif", Font.PLAIN, 16));
+        rowIndicator.setBounds(7, 33, 25, 600);
+        rowIndicator.setFont(new Font("sans-serif", Font.ITALIC, 13));
         rowIndicator.setOpaque(false);
+        rowIndicator.setEditable(false);
 
         JLabel cornerLabel1 = new JLabel();
         cornerLabel1.setBounds(700, 20, 100, 75);
@@ -47,11 +48,12 @@ public class App {
         mainFrame.add(cornerLabel2);
         mainFrame.repaint();
 
-        while (true) { 
+        while (true) {
             rowIndicator.setText("");
             for (int i = 1; i < textArea.getLineCount() + 1; i++) {
                 rowIndicator.setText(rowIndicator.getText() + Integer.toString(i) + "\n");
             }
+            Thread.sleep(textArea.getLineCount() * 10);
         }
     }
 }
