@@ -2,6 +2,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 import javax.swing.*;
 
 public class App {
@@ -46,9 +51,29 @@ public class App {
         fileOptionPanel.setLayout(null);
 
         JButton newFileButton = new JButton("New");
-        newFileButton.setBounds(25, 5, 100, 20);
+        newFileButton.setBounds(5, 5, 140, 20);
         newFileButton.setFont(new Font("sans-serif", Font.PLAIN, 14));
         newFileButton.setBackground(Color.LIGHT_GRAY);
+
+        JButton saveFileButton = new JButton("Save");
+        saveFileButton.setBounds(5, 30, 140, 20);
+        saveFileButton.setFont(new Font("sans-serif", Font.PLAIN, 14));
+        saveFileButton.setBackground(Color.LIGHT_GRAY);
+
+        JButton saveFileAsButton = new JButton("Save as");
+        saveFileAsButton.setBounds(5, 55, 140, 20);
+        saveFileAsButton.setFont(new Font("sans-serif", Font.PLAIN, 14));
+        saveFileAsButton.setBackground(Color.LIGHT_GRAY);
+
+        JTextField nameField = new JTextField();
+        nameField.setBounds(15, 75, 120, 20);
+        nameField.setFont(new Font("sans-serif", Font.ITALIC, 14));
+        nameField.setBackground(Color.LIGHT_GRAY);
+
+        JButton openFileButton = new JButton("Open");
+        openFileButton.setBounds(5, 100, 140, 20);
+        openFileButton.setFont(new Font("sans-serif", Font.PLAIN, 14));
+        openFileButton.setBackground(Color.LIGHT_GRAY);
 
         JLabel cornerLabel1 = new JLabel();
         cornerLabel1.setBounds(700, 20, 100, 75);
@@ -70,6 +95,10 @@ public class App {
         mainFrame.repaint();
 
         fileOptionPanel.add(newFileButton);
+        fileOptionPanel.add(saveFileButton);
+        fileOptionPanel.add(saveFileAsButton);
+        fileOptionPanel.add(nameField);
+        fileOptionPanel.add(openFileButton);
         fileOptionPanel.repaint();
 
         fileButton.addActionListener(new ActionListener() {
@@ -90,6 +119,101 @@ public class App {
                 mainFrame.repaint();
                 fileOptionPanel.repaint();
                 fileOptionPanel.setVisible(false);
+            }
+        });
+
+        saveFileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String filePath = "no file";
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                fileChooser.setCurrentDirectory(new File("desktop"));
+                int result = fileChooser.showSaveDialog(fileChooser);
+        
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    filePath = selectedFile.getAbsolutePath();
+                    
+                }
+
+                if (!filePath.equals("no file")) {
+                    File file = new File(filePath);
+                    try {
+                        FileWriter fileWriter = new FileWriter(file);
+                        fileWriter.write("");
+                        fileWriter.write(textArea.getText());
+                        fileWriter.close();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                    
+                    
+                }
+            }
+        });
+
+        saveFileAsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String filePath = "no file";
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                fileChooser.setCurrentDirectory(new File("desktop"));
+                int result = fileChooser.showSaveDialog(fileChooser);
+        
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    filePath = selectedFile.getAbsolutePath();
+                }
+
+                if (!filePath.equals("no file")) {
+                    File newFile = new File(filePath + "\\" + nameField.getText().strip() + ".txt");
+                    try {
+                        newFile.createNewFile();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                    try {
+                        FileWriter fileWriter = new FileWriter(newFile);
+                        fileWriter.write(textArea.getText());
+                        fileWriter.close();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        openFileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String filePath = "no file";
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                fileChooser.setCurrentDirectory(new File("desktop"));
+                int result = fileChooser.showOpenDialog(fileChooser);
+        
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    filePath = selectedFile.getAbsolutePath();
+                }
+
+                if (!filePath.equals("no file")) {
+                    File file = new File(filePath);
+                    textArea.setText("");
+                    try {
+                        Scanner fileScanner = new Scanner(file);
+                        while (fileScanner.hasNextLine()) {
+                            textArea.setText(textArea.getText() + fileScanner.nextLine() + "\n");
+                        }
+                        fileScanner.close();
+                    } catch (FileNotFoundException exception) {
+                        exception.printStackTrace();
+                    }
+                    fileOptionPanel.setVisible(false);
+                    mainFrame.repaint();
+                }
             }
         });
 
