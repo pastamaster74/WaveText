@@ -11,10 +11,13 @@ import javax.swing.*;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        JFrame mainFrame = new JFrame("DogNotes");
+        ImageIcon appIcon = new ImageIcon("assets/WaveText.png");
+
+        JFrame mainFrame = new JFrame("WaveText");
         mainFrame.setLayout(null);
         mainFrame.setBounds(600, 200, 800, 600);
         mainFrame.getContentPane().setBackground(new Color(50, 159, 168));
+        mainFrame.setIconImage(appIcon.getImage());
         mainFrame.setVisible(true);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setResizable(false);
