@@ -150,6 +150,8 @@ public class App {
                     
                     
                 }
+                fileOptionPanel.setVisible(false);
+                mainFrame.repaint();
             }
         });
 
@@ -182,6 +184,8 @@ public class App {
                         e1.printStackTrace();
                     }
                 }
+                fileOptionPanel.setVisible(false);
+                mainFrame.repaint();
             }
         });
 
@@ -211,9 +215,10 @@ public class App {
                     } catch (FileNotFoundException exception) {
                         exception.printStackTrace();
                     }
-                    fileOptionPanel.setVisible(false);
-                    mainFrame.repaint();
+                    
                 }
+                fileOptionPanel.setVisible(false);
+                mainFrame.repaint();
             }
         });
 
