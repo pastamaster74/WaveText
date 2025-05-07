@@ -20,7 +20,6 @@ public class App {
         mainFrame.setIconImage(appIcon.getImage());
         mainFrame.setVisible(true);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setResizable(false);
 
         JPanel topBar = new JPanel();
         topBar.setBounds(0, 0, 800, 20);
@@ -28,7 +27,7 @@ public class App {
         topBar.setBackground(Color.GRAY);
 
         JTextArea textArea = new JTextArea();
-        textArea.setBounds(25, 30, 750, 525);
+        textArea.setBounds(25, 30, mainFrame.getWidth() - 50, mainFrame.getHeight() - 75);
         textArea.setFont(new Font("sans-serif", Font.PLAIN, 13));
         textArea.setBackground(new Color(40, 149, 168));
         textArea.setForeground(Color.BLACK);
@@ -78,23 +77,11 @@ public class App {
         openFileButton.setFont(new Font("sans-serif", Font.PLAIN, 14));
         openFileButton.setBackground(Color.LIGHT_GRAY);
 
-        JLabel cornerLabel1 = new JLabel();
-        cornerLabel1.setBounds(700, 20, 100, 75);
-        cornerLabel1.setOpaque(true);
-        cornerLabel1.setBackground(Color.WHITE);
-
-        JLabel cornerLabel2 = new JLabel();
-        cornerLabel2.setBounds(15, 475, 100, 100);
-        cornerLabel2.setOpaque(true);
-        cornerLabel2.setBackground(Color.WHITE);
-
         mainFrame.add(fileButton);
         mainFrame.add(fileOptionPanel);
         mainFrame.add(topBar);
         mainFrame.add(textArea);
         mainFrame.add(rowIndicator);
-        mainFrame.add(cornerLabel1);
-        mainFrame.add(cornerLabel2);
         mainFrame.repaint();
 
         fileOptionPanel.add(newFileButton);
@@ -230,6 +217,8 @@ public class App {
             for (int i = 1; i < textArea.getLineCount() + 1; i++) {
                 rowIndicator.setText(rowIndicator.getText() + Integer.toString(i) + "\n");
             }
+            topBar.setBounds(0, 0, mainFrame.getWidth(), 20);
+            textArea.setBounds(25, 30, mainFrame.getWidth() - 50, mainFrame.getHeight() - 75);
             Thread.sleep(textArea.getLineCount() * 10);
         }
     }
